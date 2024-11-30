@@ -1,0 +1,27 @@
+# FastAPI and ASGI server
+fastapi>=0.104.0
+uvicorn>=0.24.0
+fastapi-versioning>=0.10.0
+
+# Database
+sqlalchemy>=2.0.23
+psycopg2-binary>=2.9.9
+alembic>=1.12.1
+
+# Authentication and Security
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.6
+
+# Environment variables and settings
+python-dotenv>=1.0.0
+pydantic>=2.4.2
+pydantic[email]>=2.4.2
+pydantic-settings
+
+# Date and time handling
+python-dateutil>=2.8.2
+
+# Testing
+pytest>=7.4.3
+httpx>=0.25.1
