@@ -2,10 +2,7 @@ from fastapi import FastAPI
 from fastapi_versioning import VersionedFastAPI
 from app.core.config import settings
 from app.api.v1.endpoints import checkouts
-from app.core.database import Base, engine
 
-# Create database tables
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -15,7 +12,7 @@ app = FastAPI(
 # Add routes
 app.include_router(
     checkouts.router,
-    prefix=f"{settings.API_V1_STR}/checkouts",
+    prefix=f"/checkouts",
     tags=["checkouts"]
 )
 
@@ -23,6 +20,6 @@ app.include_router(
 app = VersionedFastAPI(
     app,
     version_format='{major}',
-    prefix_format='/v{major}',
+    prefix_format='/library-management-system/v{major}',
     description='Library Management System API'
 )
