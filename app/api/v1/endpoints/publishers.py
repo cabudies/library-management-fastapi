@@ -6,10 +6,13 @@ from app.core.database import get_db
 from app.models.user import User
 from app.models.library import Publisher
 from app.schemas.library import PublisherCreate, Publisher as PublisherSchema
+from fastapi_versioning import version
+
 
 router = APIRouter()
 
 @router.post("/", response_model=PublisherSchema)
+@version(1)
 async def create_publisher(
     *,
     db: Session = Depends(get_db),
@@ -24,6 +27,7 @@ async def create_publisher(
     return publisher
 
 @router.get("/", response_model=List[PublisherSchema])
+@version(1)
 async def get_publishers(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -35,6 +39,7 @@ async def get_publishers(
     return publishers
 
 @router.get("/{publisher_id}", response_model=PublisherSchema)
+@version(1)
 async def get_publisher(
     publisher_id: int,
     db: Session = Depends(get_db),
@@ -47,6 +52,7 @@ async def get_publisher(
     return publisher
 
 @router.put("/{publisher_id}", response_model=PublisherSchema)
+@version(1)
 async def update_publisher(
     publisher_id: int,
     publisher_in: PublisherCreate,

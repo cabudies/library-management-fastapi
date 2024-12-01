@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
+from fastapi_versioning import version
+
 from app.api import deps
 from app.core.database import get_db
 from app.models.user import User
@@ -13,6 +15,7 @@ from app.schemas.item import (
 router = APIRouter()
 
 @router.post("/", response_model=MagazineSchema)
+@version(1)
 async def create_magazine(
     *,
     db: Session = Depends(get_db),
@@ -27,6 +30,7 @@ async def create_magazine(
     return magazine
 
 @router.get("/", response_model=List[MagazineSchema])
+@version(1)
 async def get_magazines(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -38,6 +42,7 @@ async def get_magazines(
     return magazines
 
 @router.get("/{magazine_id}", response_model=MagazineSchema)
+@version(1)
 async def get_magazine(
     magazine_id: int,
     db: Session = Depends(get_db),
@@ -50,6 +55,7 @@ async def get_magazine(
     return magazine
 
 @router.put("/{magazine_id}", response_model=MagazineSchema)
+@version(1)
 async def update_magazine(
     magazine_id: int,
     magazine_in: MagazineCreate,
@@ -69,6 +75,7 @@ async def update_magazine(
     return magazine
 
 @router.post("/volumes", response_model=MagazineVolumeSchema)
+@version(1)
 async def create_magazine_volume(
     *,
     db: Session = Depends(get_db),

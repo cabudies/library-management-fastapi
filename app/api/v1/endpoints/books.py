@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
+from fastapi_versioning import version
+
 from app.api import deps
 from app.core.database import get_db
 from app.models.user import User
@@ -13,6 +15,7 @@ from app.schemas.item import (
 router = APIRouter()
 
 @router.post("/", response_model=BookSchema)
+@version(1)
 async def create_book(
     *,
     db: Session = Depends(get_db),
@@ -27,6 +30,7 @@ async def create_book(
     return book
 
 @router.get("/", response_model=List[BookSchema])
+@version(1)
 async def get_books(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -38,6 +42,7 @@ async def get_books(
     return books
 
 @router.get("/{book_id}", response_model=BookSchema)
+@version(1)
 async def get_book(
     book_id: int,
     db: Session = Depends(get_db),
@@ -50,6 +55,7 @@ async def get_book(
     return book
 
 @router.put("/{book_id}", response_model=BookSchema)
+@version(1)
 async def update_book(
     book_id: int,
     book_in: BookCreate,
@@ -69,6 +75,7 @@ async def update_book(
     return book
 
 @router.post("/editions", response_model=BookEditionSchema)
+@version(1)
 async def create_book_edition(
     *,
     db: Session = Depends(get_db),

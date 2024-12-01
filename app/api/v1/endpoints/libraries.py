@@ -6,10 +6,13 @@ from app.core.database import get_db
 from app.models.user import User
 from app.models.library import Library
 from app.schemas.library import LibraryCreate, Library as LibrarySchema
+from fastapi_versioning import version
+
 
 router = APIRouter()
 
 @router.post("/", response_model=LibrarySchema)
+@version(1)
 async def create_library(
     *,
     db: Session = Depends(get_db),
@@ -24,6 +27,7 @@ async def create_library(
     return library
 
 @router.get("/", response_model=List[LibrarySchema])
+@version(1)
 async def get_libraries(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -35,6 +39,7 @@ async def get_libraries(
     return libraries
 
 @router.get("/{library_id}", response_model=LibrarySchema)
+@version(1)
 async def get_library(
     library_id: int,
     db: Session = Depends(get_db),
@@ -47,6 +52,7 @@ async def get_library(
     return library
 
 @router.put("/{library_id}", response_model=LibrarySchema)
+@version(1)
 async def update_library(
     library_id: int,
     library_in: LibraryCreate,

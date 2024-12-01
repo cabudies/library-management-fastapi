@@ -6,10 +6,13 @@ from app.core.database import get_db
 from app.models.user import User
 from app.models.library import Manufacturer
 from app.schemas.library import ManufacturerCreate, Manufacturer as ManufacturerSchema
+from fastapi_versioning import version
+
 
 router = APIRouter()
 
 @router.post("/", response_model=ManufacturerSchema)
+@version(1)
 async def create_manufacturer(
     *,
     db: Session = Depends(get_db),
@@ -24,6 +27,7 @@ async def create_manufacturer(
     return manufacturer
 
 @router.get("/", response_model=List[ManufacturerSchema])
+@version(1)
 async def get_manufacturers(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -35,6 +39,7 @@ async def get_manufacturers(
     return manufacturers
 
 @router.get("/{manufacturer_id}", response_model=ManufacturerSchema)
+@version(1)
 async def get_manufacturer(
     manufacturer_id: int,
     db: Session = Depends(get_db),
@@ -47,6 +52,7 @@ async def get_manufacturer(
     return manufacturer
 
 @router.put("/{manufacturer_id}", response_model=ManufacturerSchema)
+@version(1)
 async def update_manufacturer(
     manufacturer_id: int,
     manufacturer_in: ManufacturerCreate,

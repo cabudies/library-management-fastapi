@@ -6,10 +6,13 @@ from app.core.database import get_db
 from app.models.user import User
 from app.models.item import Puzzle
 from app.schemas.item import PuzzleCreate, Puzzle as PuzzleSchema
+from fastapi_versioning import version
+
 
 router = APIRouter()
 
 @router.post("/", response_model=PuzzleSchema)
+@version(1)
 async def create_puzzle(
     *,
     db: Session = Depends(get_db),
@@ -24,6 +27,7 @@ async def create_puzzle(
     return puzzle
 
 @router.get("/", response_model=List[PuzzleSchema])
+@version(1)
 async def get_puzzles(
     db: Session = Depends(get_db),
     skip: int = 0,
@@ -35,6 +39,7 @@ async def get_puzzles(
     return puzzles
 
 @router.get("/{puzzle_id}", response_model=PuzzleSchema)
+@version(1)
 async def get_puzzle(
     puzzle_id: int,
     db: Session = Depends(get_db),
@@ -47,6 +52,7 @@ async def get_puzzle(
     return puzzle
 
 @router.put("/{puzzle_id}", response_model=PuzzleSchema)
+@version(1)
 async def update_puzzle(
     puzzle_id: int,
     puzzle_in: PuzzleCreate,

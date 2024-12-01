@@ -6,10 +6,7 @@ from app.api.v1.endpoints import (
     libraries, publishers, manufacturers, checkouts
 )
 
-app = FastAPI(
-    title=settings.PROJECT_NAME,
-    version=settings.VERSION
-)
+app = FastAPI(title=settings.PROJECT_NAME)
 
 # Add routes
 app.include_router(
@@ -70,6 +67,6 @@ app.include_router(
 app = VersionedFastAPI(
     app,
     version_format='{major}',
-    prefix_format='/library-management-system/v{major}',
+    prefix_format=settings.API_STR+'/v{major}',
     description='Library Management System API'
 )
