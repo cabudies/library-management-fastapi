@@ -23,6 +23,13 @@ async def create_magazine(
     current_user: User = Depends(deps.get_current_active_admin)
 ):
     """Create new magazine (admin only)"""
+    ## check if magazine with same id already exists
+    if db.query(Magazine).filter(Magazine.id == magazine_in.id).first():
+        raise HTTPException(
+            status_code=400, 
+            detail="Magazine with same id already exists"
+        )
+    
     magazine = Magazine(**magazine_in.model_dump())
     db.add(magazine)
     db.commit()
@@ -74,15 +81,16 @@ async def update_magazine(
     db.refresh(magazine)
     return magazine
 
-@router.post("/volumes", response_model=MagazineVolumeSchema)
+@router.post("/{magazine_id}/volumes", response_model=MagazineVolumeSchema)
 @version(1)
 async def create_magazine_volume(
-    *,
-    db: Session = Depends(get_db),
+    magazine_id: int,
     volume_in: MagazineVolumeCreate,
+    db: Session = Depends(get_db),
     current_user: User = Depends(deps.get_current_active_admin)
 ):
     """Create new magazine volume (admin only)"""
+    setattr(volume_in, "magazine_id", magazine_id)
     volume = MagazineVolume(**volume_in.model_dump())
     db.add(volume)
     db.commit()

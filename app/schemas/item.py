@@ -21,7 +21,7 @@ class BookCreate(BookBase):
     pass
 
 class BookEditionBase(BaseModel):
-    book_id: Optional[int] = Field(default=0)
+    book_id: Optional[int] = 0
     edition_number: str
     publication_year: int
     author_ids: List[int]
@@ -52,7 +52,7 @@ class MagazineCreate(MagazineBase):
     pass
 
 class MagazineVolumeBase(BaseModel):
-    magazine_id: int
+    magazine_id: Optional[int] = None
     year: int
     volume_number: int
 
