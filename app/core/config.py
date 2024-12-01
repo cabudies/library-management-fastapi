@@ -4,6 +4,7 @@ from typing import Optional
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Library Management System"
     VERSION: str = "1.0.0"
+    # API_V1_STR: str = "/api/v1"
     API_V1_STR: str = "/api"
     
     POSTGRES_SERVER: str = "localhost"

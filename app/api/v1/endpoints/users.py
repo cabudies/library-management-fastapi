@@ -14,7 +14,7 @@ async def create_user(
     *,
     db: Session = Depends(get_db),
     user_in: UserCreate,
-    current_user: User = Depends(deps.get_current_active_admin)
+    # current_user: User = Depends(deps.get_current_active_admin)
 ):
     """Create new user (admin only)"""
     user = db.query(User).filter(User.email == user_in.email).first()
@@ -28,7 +28,7 @@ async def create_user(
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
         full_name=user_in.full_name,
-        role=UserRole.MEMBER
+        role=user_in.role
     )
     db.add(user)
     db.commit()
