@@ -74,15 +74,18 @@ async def update_book(
     db.refresh(book)
     return book
 
-@router.post("/editions", response_model=BookEditionSchema)
+@router.post("/{book_id}/editions", response_model=BookEditionSchema)
 @version(1)
 async def create_book_edition(
-    *,
-    db: Session = Depends(get_db),
+    # *,
+    book_id: int,
     edition_in: BookEditionCreate,
+    db: Session = Depends(get_db),
     current_user: User = Depends(deps.get_current_active_admin)
 ):
     """Create new book edition (admin only)"""
+    # book_id = 0
+    setattr(edition_in, 'book_id', book_id)
     author_ids = edition_in.author_ids
     edition_data = edition_in.model_dump(exclude={'author_ids'})
     

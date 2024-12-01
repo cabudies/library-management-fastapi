@@ -3,7 +3,7 @@ from fastapi_versioning import VersionedFastAPI
 from app.core.config import settings
 from app.api.v1.endpoints import (
     auth, users, books, magazines, puzzles,
-    libraries, publishers, manufacturers, checkouts
+    libraries, publishers, manufacturers, checkouts, authors, copies
 )
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -61,6 +61,18 @@ app.include_router(
     checkouts.router,
     prefix=f"/checkouts",
     tags=["checkouts"]
+)
+
+app.include_router(
+    authors.router,
+    prefix=f"/authors",
+    tags=["authors"]
+)
+
+app.include_router(
+    copies.router,
+    prefix=f"/copies",
+    tags=["copies"]
 )
 
 # Add versioning

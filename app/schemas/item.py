@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional
 from enum import Enum
 
@@ -21,7 +21,7 @@ class BookCreate(BookBase):
     pass
 
 class BookEditionBase(BaseModel):
-    book_id: int
+    book_id: Optional[int] = Field(default=0)
     edition_number: str
     publication_year: int
     author_ids: List[int]
@@ -83,6 +83,35 @@ class PuzzleCreate(PuzzleBase):
     pass
 
 class Puzzle(PuzzleBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+# Author Schemas
+class AuthorBase(BaseModel):
+    name: str
+
+class AuthorCreate(AuthorBase):
+    pass
+
+class Author(AuthorBase):
+    id: int
+    
+    class Config:
+        from_attributes = True
+
+# Item Copy Schemas
+class ItemCopyBase(BaseModel):
+    library_id: int
+    book_edition_id: Optional[int] = None
+    magazine_volume_id: Optional[int] = None
+    puzzle_id: Optional[int] = None
+
+class ItemCopyCreate(ItemCopyBase):
+    pass
+
+class ItemCopy(ItemCopyBase):
     id: int
     
     class Config:
