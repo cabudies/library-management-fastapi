@@ -19,7 +19,7 @@ async def return_item(
     if not checkout:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Checkout not found"
+            detail="No checkout record was found for the given ID"
         )
     
     if checkout.user_id != current_user.id and current_user.role != "admin":
