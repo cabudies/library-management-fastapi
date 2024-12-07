@@ -107,6 +107,7 @@ class ItemCopyBase(BaseModel):
     book_edition_id: Optional[int] = None
     magazine_volume_id: Optional[int] = None
     puzzle_id: Optional[int] = None
+    duration_in_days: int
 
 class ItemCopyCreate(ItemCopyBase):
     pass

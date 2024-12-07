@@ -100,6 +100,9 @@ class ItemCopy(Base):
     magazine_volume_id = Column(Integer, ForeignKey("magazine_volumes.id"), nullable=True)
     puzzle_id = Column(Integer, ForeignKey("puzzles.id"), nullable=True)
     
+    ##### changes for duration #######
+    duration_in_days = Column(Integer, nullable=False, default=5)
+    
     # Relationships
     library = relationship("Library", back_populates="item_copies")
     book_edition = relationship("BookEdition", back_populates="copies")

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 
-from app.models.user import UserRole
+from app.models.user import UserRole, Honorific
 
 class Token(BaseModel):
     access_token: str
@@ -16,6 +16,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     role: UserRole
     password: str
+    honorific: Honorific
 
 class UserLogin(BaseModel):
     email: EmailStr
